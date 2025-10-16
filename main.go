@@ -33,17 +33,16 @@ func main() {
 		return
 	}
 	defer redis.Close()
-	//5. 注册路由
+	//5. 初始化雪花算法
+	if err := snowflake.Init(settings.Conf.MachineID); err != nil {
+		fmt.Printf("init snowflake failed, err:%v\n", err)
+		return
+	}
+	//6. 注册路由
 	r := routers.Setup()
 	err := r.Run(fmt.Sprintf(":%d", settings.Conf.Port))
 	if err != nil {
 		fmt.Printf("run server failed, err:%v\n", err)
-		return
-	}
-
-	//6. 初始化雪花算法
-	if err := snowflake.Init(settings.Conf.MachineID); err != nil {
-		fmt.Printf("init snowflake failed, err:%v\n", err)
 		return
 	}
 }
