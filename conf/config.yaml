@@ -1,5 +1,6 @@
 mode: "dev"
 port: 9000
+machine_id: 1
 
 log:
   level: "debug"

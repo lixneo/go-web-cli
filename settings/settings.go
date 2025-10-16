@@ -12,6 +12,7 @@ var Conf = new(AppConfig)
 type AppConfig struct {
 	Mode         string `mapstructure:"mode"`
 	Port         int    `mapstructure:"port"`
+	MachineID    uint16 `mapstructure:"machine_id"`
 	*LogConfig   `mapstructure:"log"`
 	*MySQLConfig `mapstructure:"mysql"`
 	*RedisConfig `mapstructure:"redis"`
