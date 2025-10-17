@@ -18,5 +18,6 @@ func Setup() *gin.Engine {
 		c.String(http.StatusOK, "GoWeb 后台接口")
 	})
 	v1.POST("/signup", controller.SignUpHandler)
+	v1.POST("/login", controller.LoginHandler)
 	return r
 }

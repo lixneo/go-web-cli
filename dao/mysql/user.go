@@ -41,3 +41,23 @@ func Register(user *models.User) (err error) {
 	_, err = db.Exec(sqlStr, userID, user.UserName, password)
 	return
 }
+
+func Login(user *models.User) (err error) {
+	originPassword := user.Password // 记录一下原始密码
+	sqlStr := "select user_id, username, password from user where username = ?"
+	err = db.Get(user, sqlStr, user.UserName)
+	if err != nil && err != sql.ErrNoRows {
+		// 查询数据库出错
+		return
+	}
+	if err == sql.ErrNoRows {
+		// 用户不存在
+		return ErrorUserNotExit
+	}
+	// 生成加密密码与查询到的密码比较
+	password := encryptPassword([]byte(originPassword))
+	if user.Password != password {
+		return ErrorPasswordWrong
+	}
+	return
+}
